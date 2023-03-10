@@ -1,4 +1,4 @@
 from graph import Graph
 
-graph = Graph('test.txt')
-print(graph.vertices[0])
+graph = Graph('test files/table 1.txt')
+print(graph)
