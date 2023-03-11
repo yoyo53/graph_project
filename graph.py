@@ -55,7 +55,7 @@ class Graph:
                 else:
                     matrix[-1].append(str(edge.weight))
 
-        lens = [max(map(len, col)) for col in zip(*matrix)]
-        fmt = "\t".join("{{:{}}}".format(x) for x in lens)
+        sizes = [max(map(len, col)) for col in zip(*matrix)]
+        fmt = " | ".join(f"{{:{size}}}" for size in sizes)
         table = [fmt.format(*row) for row in matrix]
         return "\n".join(table)
