@@ -1,4 +1,4 @@
 from graph import Graph
 
-graph = Graph('test files/table 1.txt')
-print(graph)
+graph = Graph('test files/test.txt')
+print(graph.as_matrix())
