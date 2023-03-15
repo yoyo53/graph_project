@@ -60,11 +60,8 @@ class Graph:
         return next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None
 
     def get_latest_date(self):
-        self.vertices.reverse()
-        result = [vertex.get_latest_date() for vertex in self.vertices]
-        result.reverse()
-        self.vertices.reverse()
-        return result
+        return [vertex.get_latest_date() for vertex in self.vertices]
+
 
     def get_earliest_dates(self):
         return [vertex.get_earliest_date() for vertex in self.vertices]
