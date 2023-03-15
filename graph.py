@@ -56,6 +56,6 @@ class Graph:
         lines = [fmt.format(*row) for row in matrix]
         return "\n".join(lines)
 
-    def check_edges(self):
+    def has_negative_edges(self):
         return next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None
 
