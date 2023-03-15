@@ -55,8 +55,7 @@ class Graph:
         fmt = " | ".join(f"{{:{size}}}" for size in sizes)
         lines = [fmt.format(*row) for row in matrix]
         return "\n".join(lines)
+
     def check_edges(self):
-        if next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None:
-            return False
-        return True
+        return filter(lambda obj: obj.weight < 0, self.edges).__sizeof__() == 0
 
