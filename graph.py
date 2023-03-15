@@ -13,26 +13,26 @@ class Graph:
             lines = [line.replace("\n", "").strip(" ") for line in lines]
             lines = list(filter(None, lines))
 
-            self.vertices.append(Vertex("0"))
+            self.vertices.append(Vertex(self, "0"))
             for i in range(len(lines)):
-                self.vertices.append(Vertex(str(i + 1)))
-            self.vertices.append(Vertex(str(len(lines) + 1)))
+                self.vertices.append(Vertex(self, str(i + 1)))
+            self.vertices.append(Vertex(self, str(len(lines) + 1)))
 
             for line in lines:
                 line = line.split(" ")
                 task = next(filter(lambda obj: obj.name == line[0], self.vertices))
                 if len(line) == 2:
-                    self.edges.append(Edge(self.vertices[0], task, 0))
+                    self.edges.append(Edge(self, self.vertices[0], task, 0))
                 else:
                     for constraint in line[2:]:
                         source = next(filter(lambda obj: obj.name == constraint, self.vertices))
                         duration = next(filter(lambda line: line.split(" ")[0] == source.name, lines)).split(" ")[1]
-                        self.edges.append(Edge(source, task, int(duration)))
+                        self.edges.append(Edge(self, source, task, int(duration)))
 
             for vertex in self.vertices:
                 if vertex != self.vertices[-1] and next(filter(lambda obj: obj.source == vertex, self.edges), None) is None:
                     duration = next(filter(lambda line: line.split(" ")[0] == vertex.name, lines)).split(" ")[1]
-                    self.edges.append(Edge(vertex, self.vertices[-1], int(duration)))
+                    self.edges.append(Edge(self, vertex, self.vertices[-1], int(duration)))
 
     def __str__(self):
         lines = [f"{len(self.vertices)} vertices", f"{len(self.edges)} edges"]
