@@ -57,5 +57,5 @@ class Graph:
         return "\n".join(lines)
 
     def check_edges(self):
-        return filter(lambda obj: obj.weight < 0, self.edges).__sizeof__() == 0
+        return next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None
 
