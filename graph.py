@@ -30,7 +30,7 @@ class Graph:
                         self.edges.append(Edge(self, source, task, int(duration)))
 
             for vertex in self.vertices:
-                if vertex != self.vertices[-1] and next(filter(lambda obj: obj.source == vertex, self.edges), None) is None:
+                if vertex != self.vertices[-1] and len(vertex.get_successors()) == 0:
                     duration = next(filter(lambda line: line.split(" ")[0] == vertex.name, lines)).split(" ")[1]
                     self.edges.append(Edge(self, vertex, self.vertices[-1], int(duration)))
 
@@ -59,3 +59,5 @@ class Graph:
     def has_negative_edges(self):
         return next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None
 
+    def get_earliest_dates(self):
+        return [vertex.get_earliest_date() for vertex in self.vertices]

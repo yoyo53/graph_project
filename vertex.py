@@ -8,9 +8,14 @@ class Vertex:
         return self.name
 
     def get_predecessors(self):
-        edges = filter(lambda obj: obj.target == self, self.graph.edges)
-        return [edge.source for edge in edges]
+        return list(filter(lambda obj: obj.target == self, self.graph.edges))
 
     def get_successors(self):
-        edges = filter(lambda obj: obj.source == self, self.graph.edges)
-        return [edge.target for edge in edges]
+        return list(filter(lambda obj: obj.source == self, self.graph.edges))
+
+    def get_earliest_date(self):
+        predecessors = self.get_predecessors()
+        if len(predecessors) == 0:
+            return 0
+        else:
+            return max([edge.source.get_earliest_date() + edge.weight for edge in predecessors])

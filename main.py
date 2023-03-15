@@ -3,4 +3,4 @@ from graph import Graph
 graph = Graph('test files/test.txt')
 print(graph)
 print(graph.as_matrix())
-print(graph.has_negative_edges())
+print(graph.get_earliest_dates())
