@@ -58,6 +58,13 @@ class Graph:
         """
         return matrix
 
+    def as_formatted_matrix(self):
+        matrix = self.as_matrix()
+        sizes = [max(map(len, col)) for col in zip(*matrix)]
+        fmt = " | ".join(f"{{:{size}}}" for size in sizes)
+        lines = [fmt.format(*row) for row in matrix]
+        return "\n".join(lines)
+
     def is_scheduling(self):
         sources = list(filter(lambda obj: len(obj.get_predecessors()) == 0, self.vertices))
         if len(sources) != 1:
