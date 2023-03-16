@@ -50,11 +50,13 @@ class Graph:
                     matrix[-1].append("*")
                 else:
                     matrix[-1].append(str(edge.weight))
-
+        return matrix
+        '''
         sizes = [max(map(len, col)) for col in zip(*matrix)]
         fmt = " | ".join(f"{{:{size}}}" for size in sizes)
-        lines = [fmt.format(*row) for row in matrix]
-        return "\n".join(lines)
+        lines = [fmt.format(*row) for row in matrix]'''
+
+
 
     def has_negative_edges(self):
         return next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None
