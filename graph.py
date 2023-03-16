@@ -56,15 +56,26 @@ class Graph:
         fmt = " | ".join(f"{{:{size}}}" for size in sizes)
         lines = [fmt.format(*row) for row in matrix]'''
 
-
-
-    def has_negative_edges(self):
-        return next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None
+    def is_scheduling(self):
+        sources = list(filter(lambda obj: len(obj.get_predecessors()) == 0, self.vertices))
+        if len(sources) != 1:
+            return False
+        elif next(filter(lambda obj: obj.source == sources[0] and obj.weight != 0, self.edges), None) is not None:
+            return False
+        if len(list(filter(lambda obj: len(obj.get_successors()) == 0, self.vertices))) != 1:
+            return False
+        for vertex in self.vertices:
+            successors = vertex.get_successors()
+            if len(successors) > 0 and next(filter(lambda obj: obj.weight != successors[0].weight, successors), None) is not None:
+                return False
+        if next(filter(lambda obj: obj.weight < 0, self.edges), None) is not None:
+            return False
+        return True
 
     def get_latest_date(self):
         return [vertex.get_latest_date() for vertex in self.vertices]
 
-    def get_earliest_dates(self):
+    def get_earliest_date(self):
         return [vertex.get_earliest_date() for vertex in self.vertices]
 
     def get_rank(self):
