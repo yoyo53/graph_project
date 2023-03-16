@@ -62,6 +62,8 @@ class Graph:
     def get_latest_date(self):
         return [vertex.get_latest_date() for vertex in self.vertices]
 
-
     def get_earliest_dates(self):
         return [vertex.get_earliest_date() for vertex in self.vertices]
+
+    def get_rank(self):
+        return [vertex.get_rank() for vertex in self.vertices]

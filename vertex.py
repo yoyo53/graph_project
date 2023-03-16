@@ -26,3 +26,10 @@ class Vertex:
             return self.get_earliest_date()
         else:
             return min([edge.target.get_latest_date() - edge.weight for edge in successors])
+
+    def get_rank(self):
+        predecessors = self.get_predecessors()
+        if len(predecessors) == 0:
+            return 0
+        else:
+            return max([edge.source.get_rank() + 1 for edge in predecessors])
