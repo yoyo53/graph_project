@@ -50,11 +50,13 @@ class Graph:
                     matrix[-1].append("*")
                 else:
                     matrix[-1].append(str(edge.weight))
-        return matrix
-        '''
+        """
         sizes = [max(map(len, col)) for col in zip(*matrix)]
         fmt = " | ".join(f"{{:{size}}}" for size in sizes)
-        lines = [fmt.format(*row) for row in matrix]'''
+        lines = [fmt.format(*row) for row in matrix]
+        return "\n".join(lines)
+        """
+        return matrix
 
     def is_scheduling(self):
         sources = list(filter(lambda obj: len(obj.get_predecessors()) == 0, self.vertices))
