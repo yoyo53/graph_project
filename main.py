@@ -11,5 +11,5 @@ print(graph.get_rank())
 
 if __name__ == '__main__':
     interface = Interface()
-    interface.run()
+    interface.mainloop()
 

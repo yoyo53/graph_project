@@ -4,16 +4,16 @@ from tkinter.messagebox import showinfo
 from graph import Graph
 
 
-class Interface:
+class Interface(Tk):
     def __init__(self):
+        super().__init__()
         self.filepath = None
         self.graph = None
 
-        self.root = Tk()
-        self.root.state("zoomed")
+        self.state("zoomed")
 
-        Label(self.root, fg='black', font=('Arial', 16), justify="center", text="Graph Theory project").pack(pady=10)
-        self.content = Frame(self.root)
+        Label(self, fg='black', font=('Arial', 16), justify="center", text="Graph Theory project").pack(pady=10)
+        self.content = Frame(self)
         self.content.place(relx=.5, rely=.5, anchor=CENTER)
         self.table_frame = Frame(self.content)
         self.table_frame.pack(pady=10)
@@ -61,6 +61,3 @@ class Interface:
             for i in range(len(matrix)):
                 for j in range(len(matrix[0])):
                     Label(self.analyze_frame, width=sizes[j], fg='blue', font=('Arial', 12), justify="center", text=matrix[i][j], relief=RAISED).grid(row=i, column=j)
-
-    def run(self):
-        self.root.mainloop()
