@@ -89,3 +89,9 @@ class Graph:
 
     def get_rank(self):
         return [vertex.get_rank() for vertex in self.vertices]
+
+    def get_total_float(self):
+        return [vertex.get_total_float() for vertex in self.vertices]
+
+    def get_free_float(self):
+        return [vertex.get_free_float() for vertex in self.vertices]

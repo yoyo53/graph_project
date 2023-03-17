@@ -33,3 +33,14 @@ class Vertex:
             return 0
         else:
             return max([edge.source.get_rank() + 1 for edge in predecessors])
+
+    def get_total_float(self):
+        return self.get_latest_date() - self.get_earliest_date()
+
+    def get_free_float(self):
+        successors = self.get_successors()
+        if len(successors) == 0:
+            return 0
+        else:
+            min_date = min(successor.target.get_earliest_date() - successor.weight for successor in self.get_successors())
+            return min_date - (self.get_earliest_date())

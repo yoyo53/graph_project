@@ -57,6 +57,8 @@ class Interface(Tk):
             matrix += [["rank"] + [str(rank) for rank in self.graph.get_rank()]]
             matrix += [["earliest date"] + [str(date) for date in self.graph.get_earliest_date()]]
             matrix += [["latest date"] + [str(date) for date in self.graph.get_latest_date()]]
+            matrix += [["total float"] + [str(Float) for Float in self.graph.get_total_float()]]
+            matrix += [["free float"] + [str(Float) for Float in self.graph.get_free_float()]]
             sizes = [max(map(len, col)) + 2 for col in zip(*matrix)]
             for i in range(len(matrix)):
                 for j in range(len(matrix[0])):
