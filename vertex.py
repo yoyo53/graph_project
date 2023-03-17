@@ -18,21 +18,21 @@ class Vertex:
         if len(predecessors) == 0:
             return 0
         else:
-            return max([edge.source.get_earliest_date() + edge.weight for edge in predecessors])
+            return max(edge.source.get_earliest_date() + edge.weight for edge in predecessors)
 
     def get_latest_date(self):
         successors = self.get_successors()
         if len(successors) == 0:
             return self.get_earliest_date()
         else:
-            return min([edge.target.get_latest_date() - edge.weight for edge in successors])
+            return min(edge.target.get_latest_date() - edge.weight for edge in successors)
 
     def get_rank(self):
         predecessors = self.get_predecessors()
         if len(predecessors) == 0:
             return 0
         else:
-            return max([edge.source.get_rank() + 1 for edge in predecessors])
+            return max(edge.source.get_rank() + 1 for edge in predecessors)
 
     def get_total_float(self):
         return self.get_latest_date() - self.get_earliest_date()
@@ -42,5 +42,5 @@ class Vertex:
         if len(successors) == 0:
             return 0
         else:
-            min_date = min(successor.target.get_earliest_date() - successor.weight for successor in self.get_successors())
+            min_date = min(successor.target.get_earliest_date() - successor.weight for successor in successors)
             return min_date - (self.get_earliest_date())

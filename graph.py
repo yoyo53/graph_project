@@ -50,12 +50,6 @@ class Graph:
                     matrix[-1].append("*")
                 else:
                     matrix[-1].append(str(edge.weight))
-        """
-        sizes = [max(map(len, col)) for col in zip(*matrix)]
-        fmt = " | ".join(f"{{:{size}}}" for size in sizes)
-        lines = [fmt.format(*row) for row in matrix]
-        return "\n".join(lines)
-        """
         return matrix
 
     def as_formatted_matrix(self):
@@ -95,3 +89,16 @@ class Graph:
 
     def get_free_float(self):
         return [vertex.get_free_float() for vertex in self.vertices]
+
+    def get_critical_path(self):
+        source = next(filter(lambda obj: len(obj.get_predecessors()) == 0, self.vertices))
+        target = next(filter(lambda obj: len(obj.get_successors()) == 0, self.vertices))
+        paths = [[source]]
+        while next(filter(lambda obj: obj[-1] != target, paths), None) is not None:
+            for path in paths:
+                successors = list(filter(lambda obj: obj.source == path[-1] and obj.target.get_total_float() == 0 and obj.source.get_earliest_date() + obj.weight == obj.target.get_earliest_date(), self.edges))
+                if len(successors) > 0:
+                    for i in range(1, len(successors)):
+                        paths.append(path + [successors[i].target])
+                    path.append(successors[0].target)
+        return paths
