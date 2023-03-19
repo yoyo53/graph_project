@@ -102,3 +102,21 @@ class Graph:
                         paths.append(path + [successors[i].target])
                     path.append(successors[0].target)
         return paths
+
+    def has_a_cycle(self):
+        n = len(self.vertices)
+        index = {vertex: i for i, vertex in enumerate(self.vertices)}
+        graph = [[0] * n for _ in range(n)]
+        for u in self.edges:
+            graph[index[u.source]][index[u.target]] = 1
+        transitive_closure = [[0] * n for _ in range(n)]
+        for i in range(n):
+            for j in range(n):
+                transitive_closure[i][j] = graph[i][j]
+        for k in range(n):
+            for i in range(n):
+                for j in range(n):
+                    transitive_closure[i][j] |= (transitive_closure[i][k] and transitive_closure[k][j])
+                    if transitive_closure[i][i]:
+                        return True
+        return False

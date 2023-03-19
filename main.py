@@ -1,9 +1,10 @@
 from graph import Graph
 from interface import Interface
 
-graph = Graph('test files/test3.txt')
+graph = Graph('test files/table 1.txt')
 print(graph)
 print(graph.as_formatted_matrix())
+print(graph.has_a_cycle())
 
 if not graph.is_scheduling():
     lines = [
