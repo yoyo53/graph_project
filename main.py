@@ -4,9 +4,10 @@ from interface import Interface
 graph = Graph('test files/table 1.txt')
 print(graph)
 print(graph.as_formatted_matrix())
-print(graph.has_a_cycle())
+print(graph.has_cycle())
 
-if not graph.is_scheduling():
+
+if not graph.is_scheduling() or graph.has_cycle():
     lines = [
         "This is not a scheduling graph. A scheduling graph must satisfies the following conditions:",
         "    - a single entry point,",

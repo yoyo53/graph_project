@@ -62,7 +62,7 @@ class Interface(Tk):
         for child in self.analyze_frame.winfo_children():
             child.destroy()
         self.analyze_button.grid_forget()
-        if not self.graph.is_scheduling():
+        if not self.graph.is_scheduling() or self.graph.has_cycle():
             lines = [
                 "This is not a scheduling graph. A scheduling graph must satisfies the following conditions:",
                 "    - a single entry point,",
@@ -72,7 +72,7 @@ class Interface(Tk):
                 "    - outgoing edges of the entry vertex have zero,",
                 "    - no negative edges."
             ]
-            Label(self.analyze_frame, fg='black', font=('Arial', 12), justify="left", text="\n".join(lines)).pack()
+            Label(self.analyze_frame, fg='black', font=('Arial', 12), justify="left", text="\n".join(lines)).grid()
         else:
             lines = [
                 "This is a scheduling graph with no cycle and no negative edges."
