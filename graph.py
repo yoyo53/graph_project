@@ -7,6 +7,7 @@ class Graph:
     def __init__(self, filepath):
         self.vertices = []
         self.edges = []
+        self.filepath = filepath
 
         with open(filepath) as file:
             lines = file.readlines()
@@ -75,6 +76,19 @@ class Graph:
             return False
         return True
 
+    def has_cycle(self):
+        nb_vertices = len(self.vertices)
+        transitive_closure = [[0] * nb_vertices for _ in range(nb_vertices)]
+        for edge in self.edges:
+            transitive_closure[self.vertices.index(edge.source)][self.vertices.index(edge.target)] = 1
+        for k in range(nb_vertices):
+            for i in range(nb_vertices):
+                for j in range(nb_vertices):
+                    transitive_closure[i][j] |= (transitive_closure[i][k] and transitive_closure[k][j])
+                    if transitive_closure[i][i]:
+                        return True
+        return False
+
     def get_latest_date(self):
         return [vertex.get_latest_date() for vertex in self.vertices]
 
@@ -103,15 +117,33 @@ class Graph:
                     path.append(successors[0].target)
         return paths
 
-    def has_cycle(self):
-        nb_vertices = len(self.vertices)
-        transitive_closure = [[0] * nb_vertices for _ in range(nb_vertices)]
-        for edge in self.edges:
-            transitive_closure[self.vertices.index(edge.source)][self.vertices.index(edge.target)] = 1
-        for k in range(nb_vertices):
-            for i in range(nb_vertices):
-                for j in range(nb_vertices):
-                    transitive_closure[i][j] |= (transitive_closure[i][k] and transitive_closure[k][j])
-                    if transitive_closure[i][i]:
-                        return True
-        return False
+    def make_trace(self):
+        trace = [f"graph from file {self.filepath.split('/')[-1]}", str(self), self.as_formatted_matrix()]
+        if not self.is_scheduling() or self.has_cycle():
+            trace.append(
+                "This is not a scheduling graph. A scheduling graph must satisfy the following conditions:\n"
+                "    - a single entry point,\n"
+                "    - a single exit point,\n"
+                "    - no cycle,\n"
+                "    - same weights for all outgoing edges of a vertex,\n"
+                "    - outgoing edges of the entry vertex have zero,\n"
+                "    - no negative edges.\n")
+        else:
+            trace.append("This is a scheduling graph with no cycle and no negative edges.")
+            matrix = [["vertex"] + [vertex.name for vertex in self.vertices]]
+            matrix += [["rank"] + [str(rank) for rank in self.get_rank()]]
+            matrix += [["earliest date"] + [str(date) for date in self.get_earliest_date()]]
+            matrix += [["latest date"] + [str(date) for date in self.get_latest_date()]]
+            matrix += [["total float"] + [str(Float) for Float in self.get_total_float()]]
+            matrix += [["free float"] + [str(Float) for Float in self.get_free_float()]]
+            sizes = [max(map(len, col)) for col in zip(*matrix)]
+            fmt = " | ".join(f"{{:{size}}}" for size in sizes)
+            trace += [fmt.format(*row) for row in matrix]
+            critical_paths = self.get_critical_path()
+            if len(critical_paths) > 1:
+                trace.append("The critical paths are:")
+            else:
+                trace.append("The critical path is:")
+            for path in self.get_critical_path():
+                trace.append("    - " + " --> ".join(str(vertex) for vertex in path))
+        return "\n".join(trace)

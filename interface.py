@@ -64,7 +64,7 @@ class Interface(Tk):
         self.analyze_button.grid_forget()
         if not self.graph.is_scheduling() or self.graph.has_cycle():
             lines = [
-                "This is not a scheduling graph. A scheduling graph must satisfies the following conditions:",
+                "This is not a scheduling graph. A scheduling graph must satisfy the following conditions:",
                 "    - a single entry point,",
                 "    - a single exit point,",
                 "    - no cycle,",
