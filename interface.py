@@ -55,7 +55,7 @@ class Interface(Tk):
             for i in range(0, len(as_list), max_rows):
                 Label(self.graph_frame, fg='black', font=('Arial', 12), justify="left", text="\n".join(as_list[i:i+max_rows])).grid(row=1, column=int(1 + i/max_rows), sticky=NW, padx=10)
         else:
-            Label(self.graph_frame, fg='black', font=('Arial', 12), justify="left", text=self.graph).grid(row=1, column=1, sticky=NW, padx=10)
+            Label(self.graph_frame, fg='black', font=('Arial', 12), justify="left", text=self.graph.as_list()).grid(row=1, column=1, sticky=NW, padx=10)
 
     def analyze_graph(self):
         self.analyze_frame.grid(row=1)
