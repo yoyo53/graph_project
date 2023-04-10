@@ -5,7 +5,10 @@ from graph import Graph
 
 
 class Interface(Tk):
+    """The user interface using tkinter"""
+
     def __init__(self):
+        """Create the user interface and its default window"""
         super().__init__()
         self.filepath = None
         self.graph = None
@@ -25,6 +28,7 @@ class Interface(Tk):
         self.analyze_button = Button(self.button_frame, text='Analyze graph', command=self.analyze_graph)
 
     def load_graph(self):
+        """Open a dialog window for the user to choose a file to analyze, and generate a graph from this file"""
         self.filepath = askopenfilename(filetypes=[("text files", "*.txt")], initialdir="./test files/")
         if self.filepath is None or self.filepath == "":
             showinfo("Warning", "No file selected !")
@@ -33,6 +37,7 @@ class Interface(Tk):
             self.add_graph_table()
 
     def add_graph_table(self):
+        """Add the matrix and the list of edges of the graph chosen by the user to the window"""
         for child in self.graph_frame.winfo_children():
             child.destroy()
         self.analyze_frame.grid_forget()
@@ -58,6 +63,10 @@ class Interface(Tk):
             Label(self.graph_frame, fg='black', font=('Arial', 12), justify="left", text=self.graph.as_list()).grid(row=1, column=1, sticky=NW, padx=10)
 
     def analyze_graph(self):
+        """
+        Perform the analysis of the graph if it is a scheduling graph with no cycle. Else display a message telling
+        that the graph is not a scheduling graph.
+        """
         self.analyze_frame.grid(row=1)
         for child in self.analyze_frame.winfo_children():
             child.destroy()

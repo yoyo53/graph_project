@@ -5,6 +5,7 @@ from os.path import isfile
 
 
 def make_traces_files():
+    """Make the execution traces of all the test files"""
     for path in listdir("test files"):
         if isfile(f"test files/{path}") and path.endswith(".txt"):
             with open(f"execution traces/trace_{path}", "w") as file:
