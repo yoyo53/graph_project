@@ -49,7 +49,7 @@ class Interface(Tk):
                 else:
                     color = 'black'
                 Label(table_frame, width=sizes[j], fg=color, font=('Arial', 12), justify="center", text=matrix[i][j], relief=RAISED).grid(row=i, column=j)
-        as_list = str(self.graph).split("\n")
+        as_list = self.graph.as_list().split("\n")
         max_rows = int(1.4 * len(self.graph.vertices))
         if len(as_list) > max_rows:
             for i in range(0, len(as_list), max_rows):
@@ -95,5 +95,5 @@ class Interface(Tk):
             else:
                 lines += ["The critical path is:"]
             for path in self.graph.get_critical_path():
-                lines.append("    - " + " --> ".join(str(vertex) for vertex in path))
+                lines.append("    - " + " --> ".join(vertex.name for vertex in path))
             Label(self.analyze_frame, fg='black', font=('Arial', 12), justify="left", text="\n".join(lines)).grid(row=0, column=1, pady=10, sticky=NW)

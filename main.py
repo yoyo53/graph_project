@@ -12,7 +12,7 @@ def make_traces_files():
 
 
 if __name__ == '__main__':
-    graph = Graph('test files/table 1.txt')
+    graph = Graph('test files/test2.txt')
     print(graph.make_trace())
     interface = Interface()
     interface.mainloop()

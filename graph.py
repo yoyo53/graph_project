@@ -35,10 +35,10 @@ class Graph:
                     duration = next(filter(lambda line: line.split(" ")[0] == vertex.name, lines)).split(" ")[1]
                     self.edges.append(Edge(self, vertex, self.vertices[-1], int(duration)))
 
-    def __str__(self):
+    def as_list(self):
         lines = [f"{len(self.vertices)} vertices", f"{len(self.edges)} edges"]
         for edge in self.edges:
-            lines.append(str(edge))
+            lines.append(f'{edge.source.name} -> {edge.target.name} = {edge.weight}')
         return "\n".join(lines)
 
     def as_matrix(self):
@@ -118,7 +118,7 @@ class Graph:
         return paths
 
     def make_trace(self):
-        trace = [f"graph from file {self.filepath.split('/')[-1]}", str(self), self.as_formatted_matrix()]
+        trace = [f"graph from file {self.filepath.split('/')[-1]}", self.as_list(), self.as_formatted_matrix()]
         if not self.is_scheduling() or self.has_cycle():
             trace.append(
                 "This is not a scheduling graph. A scheduling graph must satisfy the following conditions:\n"
@@ -145,5 +145,5 @@ class Graph:
             else:
                 trace.append("The critical path is:")
             for path in self.get_critical_path():
-                trace.append("    - " + " --> ".join(str(vertex) for vertex in path))
+                trace.append("    - " + " --> ".join(vertex.name for vertex in path))
         return "\n".join(trace)

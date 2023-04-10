@@ -4,9 +4,6 @@ class Vertex:
         self.graph = graph
         self.name = name
 
-    def __str__(self):
-        return self.name
-
     def get_predecessors(self):
         return list(filter(lambda obj: obj.target == self, self.graph.edges))
 
